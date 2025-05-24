@@ -14,5 +14,7 @@ namespace Data
         }
 
         public DbSet<Movie> Movie { get; set; } = default!;
+
+        public DbSet<Watchlist> Watchlist { get; set; } = default!;
     }
 }
