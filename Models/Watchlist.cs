@@ -3,8 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class Watchlist
 {
+    [Key]
+    public int Watchlist_ID { get; set; }
     public int User_ID { get; set; }
 
+    [ForeignKey("Movie")]
     public int Movie_ID { get; set; }
 
     [DataType(DataType.Date)]
@@ -15,6 +18,5 @@ public class Watchlist
     [Display(Name = "Priority")]
     public int Priority { get; set; }
 
-    [ForeignKey("Movie_ID")]
     public Movie? movie { get; set; }
 }
