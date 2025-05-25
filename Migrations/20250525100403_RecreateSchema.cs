@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RottenPotatoes.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class RecreateSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,23 +38,23 @@ namespace RottenPotatoes.Migrations
                     UserID = table.Column<int>(name: "User_ID", type: "INTEGER", nullable: false),
                     MovieID = table.Column<int>(name: "Movie_ID", type: "INTEGER", nullable: false),
                     AddedDate = table.Column<DateTime>(name: "Added_Date", type: "TEXT", nullable: false),
-                    Priority = table.Column<int>(type: "INTEGER", nullable: false),
-                    MovieID1 = table.Column<int>(name: "Movie_ID1", type: "INTEGER", nullable: true)
+                    Priority = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Watchlist", x => x.WatchlistID);
                     table.ForeignKey(
-                        name: "FK_Watchlist_Movie_Movie_ID1",
-                        column: x => x.MovieID1,
+                        name: "FK_Watchlist_Movie_Movie_ID",
+                        column: x => x.MovieID,
                         principalTable: "Movie",
-                        principalColumn: "Movie_ID");
+                        principalColumn: "Movie_ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Watchlist_Movie_ID1",
+                name: "IX_Watchlist_Movie_ID",
                 table: "Watchlist",
-                column: "Movie_ID1");
+                column: "Movie_ID");
         }
 
         /// <inheritdoc />

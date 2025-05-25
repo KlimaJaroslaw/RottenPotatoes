@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace RottenPotatoes.Migrations
 {
     [DbContext(typeof(PotatoContext))]
-    [Migration("20250524155713_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250525100403_RecreateSchema")]
+    partial class RecreateSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,9 +66,6 @@ namespace RottenPotatoes.Migrations
                     b.Property<int>("Movie_ID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Movie_ID1")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("Priority")
                         .HasColumnType("INTEGER");
 
@@ -77,18 +74,20 @@ namespace RottenPotatoes.Migrations
 
                     b.HasKey("Watchlist_ID");
 
-                    b.HasIndex("Movie_ID1");
+                    b.HasIndex("Movie_ID");
 
                     b.ToTable("Watchlist");
                 });
 
             modelBuilder.Entity("Watchlist", b =>
                 {
-                    b.HasOne("Movie", "movie")
+                    b.HasOne("Movie", "Movie")
                         .WithMany("Watchlists")
-                        .HasForeignKey("Movie_ID1");
+                        .HasForeignKey("Movie_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("movie");
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("Movie", b =>

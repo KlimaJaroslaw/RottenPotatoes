@@ -18,5 +18,5 @@ public class Watchlist
     [Display(Name = "Priority")]
     public int Priority { get; set; }
 
-    public Movie? movie { get; set; }
+    public Movie? Movie { get; set; }
 }
