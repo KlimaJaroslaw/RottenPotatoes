@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Data;
+using RottenPotatoes.Services;
 
 namespace RottenPotatoes.Controllers
 {
     public class WatchlistController : Controller
     {
         private readonly PotatoContext _context;
+        private readonly SessionManager _session;
 
-        public WatchlistController(PotatoContext context)
+        public WatchlistController(PotatoContext context, SessionManager session)
         {
             _context = context;
+            _session = session;
         }
 
         // GET: Watchlist

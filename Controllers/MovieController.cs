@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Data;
+using RottenPotatoes.Services;
 
 namespace RottenPotatoes.Controllers
 {
     public class MovieController : Controller
     {
         private readonly PotatoContext _context;
+        private readonly SessionManager _session;
 
-        public MovieController(PotatoContext context)
+        public MovieController(PotatoContext context, SessionManager session)
         {
             _context = context;
+            _session = session;
         }
 
         // GET: Movie

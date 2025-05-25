@@ -21,7 +21,12 @@ namespace RottenPotatoes.Controllers
 
         // GET: Review/All
         public async Task<IActionResult> All()
-        {           
+        {
+            User user = _session.Get<User>("user");
+            if (user == null)                            
+                return RedirectToAction("Login", "User");
+            
+
             if (_context == null)
                 return Problem("Database context is not available.");
 
@@ -31,7 +36,11 @@ namespace RottenPotatoes.Controllers
 
         //GET: Review/User
         public async Task<IActionResult> User()
-        {            
+        {
+            User user = _session.Get<User>("user");
+            if (user == null)
+                return RedirectToAction("Login", "User");
+
             if (_context == null)
                 return Problem("Database context is not available.");
 

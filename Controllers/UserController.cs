@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RottenPotatoes.Models;
+using RottenPotatoes.Services;
 
 namespace RottenPotatoes.Controllers
 {
@@ -9,29 +10,13 @@ namespace RottenPotatoes.Controllers
     {
         #region Constructor
         private readonly PotatoContext _context;
-        public UserController(PotatoContext context)
+        private readonly SessionManager _session;
+        public UserController(PotatoContext context, SessionManager session)
         {
             _context = context;
+            _session = session;
         }
-        #endregion
-
-        public User GetLoggedUser()
-        {
-            var userJson = HttpContext.Session.GetString("User");
-            if (userJson == null)             
-                return null;
-            else
-            {
-                var user = JsonConvert.DeserializeObject<User>(userJson);
-                return user;
-            }                        
-        }
-
-        public void LogUser(User userData)
-        {
-            HttpContext.Session.SetString("User", JsonConvert.SerializeObject(userData));
-            return;
-        }
+        #endregion       
 
         public IActionResult Login()
         {
