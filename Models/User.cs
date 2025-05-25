@@ -6,6 +6,7 @@ namespace RottenPotatoes.Models
     public class User
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int User_ID { get; set; }
         public string Login_Hash { get; set; }
         public string Password_Hash { get; set; }

@@ -6,6 +6,7 @@ namespace RottenPotatoes.Models
     public class Review
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Review_ID { get; set; }
         [ForeignKey(nameof(User))]
         public int User_ID { get; set; }

@@ -5,7 +5,7 @@ namespace RottenPotatoes.Models
 {
     public class Permission
     {
-        [Key]
+        [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Permission_ID { get; set; }
         public string Description { get; set; }
     }

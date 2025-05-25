@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using RottenPotatoes.Models;
 
 namespace Data
 {
@@ -16,5 +17,9 @@ namespace Data
         public DbSet<Movie> Movie { get; set; } = default!;
 
         public DbSet<Watchlist> Watchlist { get; set; } = default!;
+
+        public DbSet<User> Users { get; set; } = default!;
+        public DbSet<Permission> Permissions { get; set; } = default!;
+        public DbSet<Review> Reviews { get; set; } = default!;
     }
 }

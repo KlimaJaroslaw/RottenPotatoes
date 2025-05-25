@@ -1,12 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Data;
+using RottenPotatoes.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<PotatoContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("PotatoContext") ?? throw new InvalidOperationException("Connection string 'PotatoContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpContextAccessor(); // Required for session manager
+builder.Services.AddScoped<SessionManager>(); // Register your class
+
+// Add session support
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -17,6 +30,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseSession(); // Enable session
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
