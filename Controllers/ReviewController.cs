@@ -44,7 +44,7 @@ namespace RottenPotatoes.Controllers
             if (_context == null)
                 return Problem("Database context is not available.");
 
-            var userReviews = await _context.Reviews.Where(x => x.User_ID == 1).ToListAsync();
+            var userReviews = await _context.Reviews.Where(x => x.User_ID == user.User_ID).ToListAsync();
             return View(userReviews);
         }
     }
