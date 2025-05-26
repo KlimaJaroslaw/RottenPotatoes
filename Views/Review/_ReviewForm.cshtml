@@ -1,0 +1,33 @@
+﻿@model RottenPotatoes.Models.Review
+@{
+    var isEdit = Model.Review_ID != 0;
+}
+
+<form asp-action="@(isEdit ? "Edit" : "Create")" method="post">
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="Review_ID" />
+    }
+
+    <div class="mb-3">
+        <label asp-for="Movie_ID" class="form-label">Movie</label>
+        <select asp-for="Movie_ID" class="form-select select2" asp-items="ViewBag.MovieList">
+            <option value="">-- Select a Movie --</option>
+        </select>
+        <span asp-validation-for="Movie_ID" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Rating" class="form-label"></label>
+        <input asp-for="Rating" class="form-control" type="number" min="1" max="10" />
+        <span asp-validation-for="Rating" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger small"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">@((isEdit ? "Save Changes" : "Create Review"))</button>
+</form>
