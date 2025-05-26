@@ -46,6 +46,25 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Synopsis)
         </dd>
+        @if (Model.Reviews?.Any() == true)
+        {
+            @foreach(var item in Model.Reviews)
+            {
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(modelItem => item.Description)
+                </dt>
+                <dt class = "col-sm-10">
+                    @Html.DisplayFor(modelItem => item.Description)
+                </dt>
+                <dt class= "col-sm-2">
+                    @Html.DisplayNameFor(modelItem => item.Rating)
+                </dt>
+                <dt class= "col-sm-2">
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </dt>
+            }
+        }
+        
     </dl>
 </div>
 <div>
