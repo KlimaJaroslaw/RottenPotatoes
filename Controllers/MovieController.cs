@@ -37,7 +37,7 @@ namespace RottenPotatoes.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
+            var movie = await _context.Movie.Include(movie => movie.Reviews)
                 .FirstOrDefaultAsync(m => m.Movie_ID == id);
             if (movie == null)
             {
