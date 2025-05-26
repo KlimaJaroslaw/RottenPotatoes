@@ -25,7 +25,7 @@ namespace RottenPotatoes.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login([Bind("login_Hash,Password_Hash")] User user)
+        public IActionResult Login([Bind("Login_Hash,Password_Hash")] User user)
         {
             User u = ValidateUser(user);
             if (u == null)
