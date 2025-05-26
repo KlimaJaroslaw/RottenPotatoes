@@ -25,7 +25,7 @@ namespace RottenPotatoes.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.Watchlist != null ? 
-                          View(await _context.Watchlist.Include(watchlist => watchlist.Movie).Include(watchlist => watchlist.User).ToListAsync()) :
+                          View(await _context.Watchlist.Include(watchlist => watchlist.Movie).Include(watchlist => watchlist.User).Where(watchlist => watchlist.User_ID==1).ToListAsync()) :
                           Problem("Entity set 'PotatoContext.Watchlist'  is null.");
         }
 
@@ -45,8 +45,8 @@ namespace RottenPotatoes.Controllers
             {
                 return NotFound();
             }
-
-            return View(watchlist);
+            return RedirectToAction("Details", "Movie",new { id });
+            // return View(watchlist);
         }
 
         // GET: Watchlist/Create
