@@ -38,6 +38,8 @@ namespace RottenPotatoes.Controllers
             }
 
             var watchlist = await _context.Watchlist
+                .Include(watchlist => watchlist.Movie)
+                .Include(watchlist => watchlist.User)
                 .FirstOrDefaultAsync(m => m.Watchlist_ID == id);
             if (watchlist == null)
             {
