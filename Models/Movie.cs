@@ -25,5 +25,6 @@ public class Movie
     [Display(Name = "Synopsis")]
     public string Synopsis { get; set; }
 
-    public ICollection<Watchlist> ?Watchlists { get; set; }
+    public ICollection<Watchlist>? Watchlists { get; set; }
+    public ICollection<Review>? Reviews { get; set; }
 }

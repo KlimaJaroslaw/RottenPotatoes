@@ -5,6 +5,8 @@ public class Watchlist
 {
     [Key]
     public int Watchlist_ID { get; set; }
+
+    [ForeignKey("User")]
     public int User_ID { get; set; }
 
     [ForeignKey("Movie")]
@@ -19,4 +21,6 @@ public class Watchlist
     public int Priority { get; set; }
 
     public Movie? Movie { get; set; }
+
+    public User? User { get; set; }
 }
