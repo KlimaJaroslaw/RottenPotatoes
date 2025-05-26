@@ -7,6 +7,6 @@ namespace RottenPotatoes.Models
     {
         [Key] [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Permission_ID { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } //Unique (PotatoContex.cs)
     }
 }

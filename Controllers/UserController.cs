@@ -1,5 +1,6 @@
 ﻿using Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using RottenPotatoes.Models;
 using RottenPotatoes.Services;
@@ -25,9 +26,9 @@ namespace RottenPotatoes.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login([Bind("Login_Hash,Password_Hash")] User user)
+        public async Task<IActionResult> Login([Bind("Login_Hash,Password_Hash")] User user)
         {
-            User u = ValidateUser(user);
+            User? u = await ValidateUser(user);
             if (u == null)
             {
                 return View();
@@ -47,13 +48,15 @@ namespace RottenPotatoes.Controllers
         #endregion
 
         #region Methods
-        private User ValidateUser(User user)
+        private async Task<User?> ValidateUser(User user)
         {
             //jesli user istnieje w bazie danych -> zwracamy user, jesli nie -> null
-            user.User_ID = -1;
-            user.Permission_ID = -1;
-            user.Permission = new Permission() { Description="admin", Permission_ID = -1 };
-            return user;
+            var userDb = await _context.Users
+                .Include(u => u.Permission)
+                .FirstOrDefaultAsync(u =>
+                    u.Login_Hash == user.Login_Hash &&
+                    u.Password_Hash == user.Password_Hash);
+            return userDb;                   
         }
         #endregion
     }

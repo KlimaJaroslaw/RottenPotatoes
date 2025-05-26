@@ -31,7 +31,10 @@ namespace RottenPotatoes.Controllers
             if (_context == null)
                 return Problem("Database context is not available.");
 
-            var allReviews = await _context.Reviews.ToListAsync();
+            var allReviews = await _context.Reviews
+                .Include(r => r.Movie)
+                .Include(r => r.User)
+                .ToListAsync();
             return View((allReviews, user));
         }
 
@@ -55,10 +58,31 @@ namespace RottenPotatoes.Controllers
             if (user == null)
                 return RedirectToAction("Login", "User");
 
-            Review r = new Review() {User=user, User_ID=user.User_ID };
+            Review r = new Review();
 
             ViewBag.MovieList = new SelectList(_context.Movie, "Movie_ID", "Title", 0);
             return View(r);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Review review)
+        {
+            User user = _session.Get<User>("user");
+            if (user == null)
+                return RedirectToAction("Login", "User");
+
+            if (ModelState.IsValid)
+            {                
+                review.User_ID = user.User_ID;
+                _context.Reviews.Add(review);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("All");
+            }
+            else
+            {
+                ViewBag.MovieList = new SelectList(_context.Movie, "Movie_ID", "Title", 0);
+                return View(review);
+            }    
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -75,6 +99,26 @@ namespace RottenPotatoes.Controllers
 
             ViewBag.MovieList = new SelectList(_context.Movie, "Movie_ID", "Title", review.Movie_ID);
             return View(review);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Review review)
+        {
+            User user = _session.Get<User>("user");
+            if (user == null)
+                return RedirectToAction("Login", "User");
+
+            if (ModelState.IsValid)
+            {                
+                _context.Reviews.Update(review);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("All");
+            }
+            else
+            {
+                ViewBag.MovieList = new SelectList(_context.Movie, "Movie_ID", "Title", 0);
+                return View(review);
+            }
         }
     }
 }
