@@ -39,6 +39,7 @@ namespace RottenPotatoes.Controllers
         }
 
         //GET: Review/User
+        [HttpGet("Review/User")]
         public async Task<IActionResult> User()
         {
             User user = _session.Get<User>("user");
@@ -48,8 +49,64 @@ namespace RottenPotatoes.Controllers
             if (_context == null)
                 return Problem("Database context is not available.");
 
-            var userReviews = await _context.Reviews.Where(x => x.User_ID == user.User_ID).ToListAsync();
-            return View((userReviews, user));
+            var userReviews = await _context.Reviews.Where(x => x.User_ID == user.User_ID).Include(r => r.Movie)
+                .Include(r => r.User).ToListAsync();
+            return View((userReviews, user, user));
+        }
+
+        [HttpGet("Review/User/{id}")]
+        public async Task<IActionResult> User(int id)
+        {
+            User user = _session.Get<User>("user");
+            if (user == null)
+                return RedirectToAction("Login", "User");
+
+            if (_context == null)
+                return Problem("Database context is not available.");
+
+            var u = await _context.Users.Where(u => u.User_ID == id).Include(u=>u.Permission).FirstOrDefaultAsync();
+            var userReviews = await _context.Reviews.Where(x => x.User_ID == id).Include(r => r.Movie)
+                .Include(r => r.User).ToListAsync();
+
+            if (u == null)
+                return NotFound();
+            return View((userReviews, user, u));
+        }
+
+        
+        public async Task<IActionResult> Movie(int id)
+        {
+            User user = _session.Get<User>("user");
+            if (user == null)
+                return RedirectToAction("Login", "User");
+
+            if (_context == null)
+                return Problem("Database context is not available.");
+
+            var movie = await _context.Movie.Include(movie => movie.Reviews)
+                .FirstOrDefaultAsync(m => m.Movie_ID == id);
+            var movieReviews = await _context.Reviews.Where(x => x.Movie_ID == id).Include(r => r.Movie)
+                .Include(r => r.User).ToListAsync();
+            
+            return View((movieReviews, user, movie));
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            User user = _session.Get<User>("user");
+            if (user == null)
+                return RedirectToAction("Login", "User");
+
+            if (_context == null)
+                return Problem("Database context is not available.");
+
+            var review = await _context.Reviews.Where(x => x.Review_ID == id).Include(r => r.Movie)
+                .Include(r => r.User).FirstOrDefaultAsync();
+
+            if (review == null)
+                return NotFound();
+            return View(review);
+
         }
 
         public async Task<IActionResult> Create()
@@ -120,5 +177,36 @@ namespace RottenPotatoes.Controllers
                 return View(review);
             }
         }
+
+        [HttpPost]        
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = _session.Get<User>("user");
+            if (user == null)
+                return RedirectToAction("Login", "User");
+
+            var review = await _context.Reviews.FindAsync(id);
+            if (review == null)
+                return NotFound();
+
+
+            if(user?.Permission?.Description == "System Admin")
+            {
+                _context.Reviews.Remove(review);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("All");
+            }
+
+            
+            if (review.User_ID == user.User_ID)
+            {
+                _context.Reviews.Remove(review);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("All");
+            }
+
+            return Forbid();
+        }
+
     }
 }

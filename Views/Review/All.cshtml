@@ -13,14 +13,14 @@
     </div>
 
     <table class="table table-bordered table-hover table-striped shadow-sm">
-        <thead class="table-dark">
+        <thead class="table-primary">
             <tr>
-                <th>ID</th>
+                <th></th>
                 <th>User</th>
                 <th>Movie</th>
                 <th>Rating</th>
                 <th>Description</th>
-                <th>Actions</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -28,7 +28,11 @@
             @foreach (var review in reviews)
             {
                 <tr>
-                    <td>@review.Review_ID</td>
+                    <td>
+                        <form asp-action="Details" asp-route-id="@review.Review_ID" method="get" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-primary me-1">Details</button>
+                        </form>
+                    </td>
                     <td>@review.User?.Login_Hash</td>
                     <td>@review.Movie?.Title</td>
                     <td>@review.Rating</td>

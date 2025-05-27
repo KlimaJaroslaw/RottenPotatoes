@@ -1,0 +1,63 @@
+﻿@model RottenPotatoes.Models.Review
+
+@{
+    int fullStars = (Model?.Rating ?? 0) / 2;                // Each full star = 2 points
+    bool hasHalfStar = (Model?.Rating ?? 0) % 2 == 1;        // Half star if odd number
+    int emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);  // Remainder are empty
+}
+
+<div class="container">    
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="card-title mb-0">
+                Review #@Model.Review_ID
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="form-label opacity-75">Movie</div>
+                    <div class="text-black fs-5">
+                        @(@Model?.Movie?.Title ?? "N/A")
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-label opacity-75">Reviewer</div>
+                    <div class="text-black fs-5">
+                        @(@Model?.User?.Login_Hash ?? "N/A")
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-label opacity-75">Rating</div>
+                    <div class="text-primary fs-5">
+                        @for (int i = 0; i < fullStars; i++)
+                        {
+                            <i class="bi bi-star-fill"></i>
+                        }
+                        @if (hasHalfStar)
+                        {
+                            <i class="bi bi-star-half"></i>
+                        }
+                        @for (int i = 0; i < emptyStars; i++)
+                        {
+                            <i class="bi bi-star"></i>
+                        }                        
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-label opacity-75">Description</div>
+                    <div class="border rounded p-3 bg-light">
+                        @if (!string.IsNullOrEmpty(Model?.Description))
+                        {
+                            <div class="text-black fst-italic">@Model.Description</div>
+                        }
+                        else
+                        {
+                            <p class="mb-0 text-muted fst-italic">No description provided</p>
+                        }
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>                        
+</div>
