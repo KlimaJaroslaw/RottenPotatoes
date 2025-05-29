@@ -25,9 +25,10 @@ namespace RottenPotatoes.Controllers
         // GET: Watchlist
         public async Task<IActionResult> Index()
         {
-              return _context.Watchlist != null ? 
-                          View(await _context.Watchlist.Include(watchlist => watchlist.Movie).Include(watchlist => watchlist.User).Where(watchlist => watchlist.User_ID==_session.Get<User>("user").User_ID).ToListAsync()) :
-                          Problem("Entity set 'PotatoContext.Watchlist'  is null.");
+            var moviesOnWatchlist = _context.Watchlist.Where(watchlist => watchlist.User_ID == _session.Get<User>("user").User_ID).Select(x => x.Movie);
+
+
+            return View(moviesOnWatchlist.ToList());
         }
 
         // GET: Watchlist/Details/5

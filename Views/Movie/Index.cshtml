@@ -1,67 +1,12 @@
-@model IEnumerable<Movie>
+@model IEnumerable<RottenPotatoes.Models.Movie>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Production_Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Director)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Producer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ScreenWriter)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Synopsis)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Production_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Director)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ScreenWriter)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Synopsis)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Movie_ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Movie_ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Movie_ID">Delete</a> |
-                <a asp-action="AddToWatchlist" asp-route-id="@item.Movie_ID">AddToWatchlist</a>
-            </td>
-        </tr>
-        
-}
-    </tbody>
-</table>
+<div class="container mt-5">
+    <div class="card shadow p-4 rounded-3 mx-auto">
+        <h2 class="mb-4 text-center">All Movies</h2>
+        @Html.Partial("_MovieList", Model)
+    </div>
+</div>
