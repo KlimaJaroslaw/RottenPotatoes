@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Data;
 using RottenPotatoes.Services;
+using RottenPotatoes.Models;
 
 namespace RottenPotatoes.Controllers
 {
@@ -25,7 +26,7 @@ namespace RottenPotatoes.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.Watchlist != null ? 
-                          View(await _context.Watchlist.Include(watchlist => watchlist.Movie).Include(watchlist => watchlist.User).Where(watchlist => watchlist.User_ID==1).ToListAsync()) :
+                          View(await _context.Watchlist.Include(watchlist => watchlist.Movie).Include(watchlist => watchlist.User).Where(watchlist => watchlist.User_ID==_session.Get<User>("user").User_ID).ToListAsync()) :
                           Problem("Entity set 'PotatoContext.Watchlist'  is null.");
         }
 
@@ -60,15 +61,20 @@ namespace RottenPotatoes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Watchlist_ID,User_ID,Movie_ID,Added_Date,Priority")] Watchlist watchlist)
+        public async Task<IActionResult> Create([Bind("Watchlist_ID,User_ID,Movie_ID,Added_Date,Priority")] Watchlist watchlist, int id)
         {
             if (ModelState.IsValid)
             {
+                watchlist.User_ID = _session.Get<User>("user").User_ID;
+                watchlist.Added_Date = DateTime.Now;
+                Console.WriteLine("---------- ID FILMU DODANEGO DO WATCHLISTY!!! -------");
+                Console.WriteLine(id);
+                watchlist.Movie_ID = id;
                 _context.Add(watchlist);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Movie");
             }
-            return View(watchlist);
+            return RedirectToAction("Index","Movie");
         }
 
         // GET: Watchlist/Edit/5
@@ -131,13 +137,13 @@ namespace RottenPotatoes.Controllers
             }
 
             var watchlist = await _context.Watchlist
-                .FirstOrDefaultAsync(m => m.Watchlist_ID == id);
+                .FirstOrDefaultAsync(m => m.Movie_ID == id);
             if (watchlist == null)
             {
                 return NotFound();
             }
 
-            return View(watchlist);
+            return RedirectToAction("Index","Movie");
         }
 
         // POST: Watchlist/Delete/5
@@ -156,7 +162,7 @@ namespace RottenPotatoes.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Movie");
         }
 
         private bool WatchlistExists(int id)

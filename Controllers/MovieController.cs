@@ -48,6 +48,16 @@ namespace RottenPotatoes.Controllers
             return View(movie);
         }
 
+        public IActionResult AddToWatchlist(int? id)
+        {
+            Console.WriteLine("####### ID to:");
+            Console.WriteLine(id);
+            return RedirectToAction("Create", "Watchlist", new { id = id });
+        }
+        public IActionResult RemoveFromWatchlist(int? id)
+        {
+            return RedirectToAction("Delete", "Watchlist", new { id = id });
+        }
         // GET: Movie/Create
         public IActionResult Create()
         {
