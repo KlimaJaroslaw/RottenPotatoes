@@ -1,4 +1,7 @@
 ﻿<!DOCTYPE html>
+@using RottenPotatoes.Models
+@using Microsoft.AspNetCore.Http
+@inject RottenPotatoes.Services.SessionManager _session
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,34 +22,34 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Index">Movies</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="All">Reviews</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Watchlist" asp-action="GetNextMovieFromWatchlist">Next Movie From Watchlist</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Watchlist" asp-action="Index">Watchlist</a>
-                        </li>
-                    }          
-                        
-                        
-                    </ul>
-                    <!-- Right-aligned button -->
-                    <div class="d-flex ms-auto gap-3">
-                        <a class="btn btn-primary" asp-controller="Review" asp-action="Create">
-                            Post Review
-                        </a>
-                        <a class="btn btn-danger" asp-controller="User" asp-action="Logout">
-                            <i class="bi bi-box-arrow-right"></i>
-                        </a>
+                @if(_session.Get<User>("user")!=null)
+                {
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Index">Movies</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="All">Reviews</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Watchlist" asp-action="GetNextMovieFromWatchlist">Next Movie From Watchlist</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Watchlist" asp-action="Index">Watchlist</a>
+                            </li>           
+                        </ul>
+                        <!-- Right-aligned button -->
+                        <div class="d-flex ms-auto gap-3">
+                            <a class="btn btn-primary" asp-controller="Review" asp-action="Create">
+                                Post Review
+                            </a>
+                            <a class="btn btn-danger" asp-controller="User" asp-action="Logout">
+                                <i class="bi bi-box-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                }
             </div>
         </nav>
     </header>
