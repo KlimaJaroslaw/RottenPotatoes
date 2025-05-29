@@ -101,7 +101,7 @@ namespace RottenPotatoes.Controllers
                 return Problem("Database context is not available.");
 
             var review = await _context.Reviews.Where(x => x.Review_ID == id).Include(r => r.Movie)
-                .Include(r => r.User).FirstOrDefaultAsync();
+                .Include(r => r.User).Include(p=>p.User.Permission).FirstOrDefaultAsync();
 
             if (review == null)
                 return NotFound();
