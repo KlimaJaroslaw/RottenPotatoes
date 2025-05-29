@@ -147,9 +147,9 @@ namespace RottenPotatoes.Controllers
             {
                 return NotFound();
             }
-
+            Console.WriteLine("--------- " + id + " -----------");
             var watchlist = await _context.Watchlist
-                .FirstOrDefaultAsync(m => m.Watchlist_ID == id);
+                .FirstOrDefaultAsync(m => m.Movie_ID == id);
             if (watchlist == null)
             {
                 return NotFound();
@@ -167,7 +167,7 @@ namespace RottenPotatoes.Controllers
             {
                 return Problem("Entity set 'PotatoContext.Watchlist'  is null.");
             }
-            var watchlist = await _context.Watchlist.FindAsync(id);
+            var watchlist = await _context.Watchlist.FirstOrDefaultAsync(m => m.Movie_ID == id);
             if (watchlist != null)
             {
                 _context.Watchlist.Remove(watchlist);
