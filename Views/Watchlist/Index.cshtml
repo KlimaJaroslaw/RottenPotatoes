@@ -5,13 +5,9 @@
 }
 
 <h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <div class="container mt-5">
     <div class="card shadow p-4 rounded-3 mx-auto">
         <h2 class="mb-4 text-center">Watchlist</h2>
-        @Html.Partial("_MovieList", Model)
+        @Html.Partial("_MovieInWatchlistList", Model)
     </div>
 </div>
