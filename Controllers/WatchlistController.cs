@@ -41,13 +41,24 @@ namespace RottenPotatoes.Controllers
             var watchlist = await _context.Watchlist
                 .Include(watchlist => watchlist.Movie)
                 .Include(watchlist => watchlist.User)
-                .FirstOrDefaultAsync(m => m.Watchlist_ID == id);
+                .FirstOrDefaultAsync(m => m.Movie_ID == id);
             if (watchlist == null)
             {
                 return NotFound();
             }
             return RedirectToAction("Details", "Movie",new { id });
             // return View(watchlist);
+        }
+
+        public IActionResult GetNextMovieFromWatchlist()
+        {
+            // Jeśli potrzebujesz warunku
+            int firstMovieID = _context.Watchlist
+                                    .Where(x => x.User_ID == _session.Get<User>("user").User_ID)
+                                    .OrderBy(x => x.Priority)
+                                    .Select(x => x.Movie_ID).Last();
+            Console.WriteLine(firstMovieID);
+            return RedirectToAction("Details", "Movie", new { id=firstMovieID });
         }
 
         // GET: Watchlist/Create
