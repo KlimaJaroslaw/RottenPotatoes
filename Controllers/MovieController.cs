@@ -65,7 +65,7 @@ namespace RottenPotatoes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Movie_ID,Title,Production_Date,Director,Producer,ScreenWriter,Synopsis")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Movie_ID,Title,Production_Date,Director,Producer,ScreenWriter,Synopsis")] RottenPotatoes.Models.Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace RottenPotatoes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Movie_ID,Title,Production_Date,Director,Producer,ScreenWriter,Synopsis")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Movie_ID,Title,Production_Date,Director,Producer,ScreenWriter,Synopsis")] RottenPotatoes.Models.Movie movie)
         {
             if (id != movie.Movie_ID)
             {
