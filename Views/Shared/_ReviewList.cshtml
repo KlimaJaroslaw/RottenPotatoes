@@ -1,0 +1,98 @@
+﻿@model (List<RottenPotatoes.Models.Review>, RottenPotatoes.Models.User);
+@{
+    List<Review> reviews = Model.Item1;
+    User userLogged = Model.Item2;
+}
+
+
+<div class="container mt-5">
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="table-primary">
+                <tr>
+                    <th></th>
+                    <th>User</th>
+                    <th>Movie</th>
+                    <th>Rating</th>
+                    <th>Description</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var review in reviews)
+                {
+                    <tr>
+                        <td>
+                            <form asp-action="Details" asp-route-id="@review.Review_ID" method="get" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-primary me-1">Details</button>
+                            </form>
+                        </td>
+                        <td>@review.User?.Login_Hash</td>
+                        <td>@review.Movie?.Title</td>
+                        <td>
+                            @{
+                                int fullStars = (review?.Rating ?? 0) / 2;                
+                                bool hasHalfStar = (review?.Rating ?? 0) % 2 == 1;        
+                                int emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);  
+                            }
+                            @for (int i = 0; i < fullStars; i++)
+                            {
+                                <i class="bi bi-star-fill"></i>
+                            }
+                            @if (hasHalfStar)
+                            {
+                                <i class="bi bi-star-half"></i>
+                            }
+                            @for (int i = 0; i < emptyStars; i++)
+                            {
+                                <i class="bi bi-star"></i>
+                            }                            
+                        </td>
+                        <td class="fst-italic">
+                            @if (!string.IsNullOrEmpty(review?.Description))
+                            {
+                                string des = review.Description.Length > 30 ? review.Description.Substring(0, 30) + "..." : review.Description;
+                                <div class="text-black fst-italic">
+                                    @(
+                                        "\"" + des + "\""
+                                        )
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="mb-0 text-muted fst-italic"></p>
+                            }
+                        </td>
+                        <td>
+                            @* Only show edit/delete if the current user owns the review *@
+                            @if (review.User_ID == userLogged.User_ID)
+                            {
+                                <form asp-action="Edit" asp-route-id="@review.Review_ID" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-primary me-1">Edit</button>
+                                </form>
+                            }
+                            else
+                            {
+
+                            }
+                        </td>
+                        <td>
+                            @* Only show edit/delete if the current user owns the review *@
+                            @if (review.User_ID == userLogged.User_ID || userLogged?.Permission?.Description == "System Admin")
+                            {
+                                <form asp-action="Delete" asp-route-id="@review.Review_ID" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            }
+                            else
+                            {
+
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

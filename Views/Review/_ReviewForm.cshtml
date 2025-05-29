@@ -13,15 +13,24 @@
     <div class="mb-3">
         <label asp-for="Movie_ID" class="form-label">Movie</label>
         <select asp-for="Movie_ID" class="form-select select2" asp-items="ViewBag.MovieList">
-            <option value="">-- Select a Movie --</option>
+            <option value="">Select a Movie</option>
         </select>
         <span asp-validation-for="Movie_ID" class="text-danger small"></span>
     </div>
-
-    <div class="mb-3">
+    <div class="m-0">
         <label asp-for="Rating" class="form-label"></label>
-        <input asp-for="Rating" class="form-control" type="number" min="1" max="10" />
-        <span asp-validation-for="Rating" class="text-danger small"></span>
+    </div>
+    <div class="mb-3">        
+        @* <input asp-for="Rating" class="form-control" type="number" min="1" max="10" /> *@
+        @* <span asp-validation-for="Rating" class="text-danger small"></span> *@
+        <div class="d-inline-flex star-rating">
+            @for (int i = 10; i >= 1; i--)
+            {
+                <input type="radio" id="star-@i" name="Rating" value="@i"
+                       class="d-none" @(Model.Rating == i ? "checked" : "") />
+                <label for="star-@i" class="star">&#9733;</label>
+            }
+        </div>
     </div>
 
     <div class="mb-3">
@@ -32,3 +41,38 @@
 
     <button type="submit" class="btn btn-primary w-100">@((isEdit ? "Save Changes" : "Create Review"))</button>
 </form>
+
+@* <div class="star-rating">
+    @for (int i = 1; i <= 10; i++)
+    {
+        <input type="radio" id="star-@i" name="Rating" value="@i" hidden />
+        <label for="star-@i" class="star">&#9733;</label>
+    }
+</div> *@
+
+<style>
+    .star-rating {
+        direction: rtl;
+        font-size: 4rem;
+        display: inline-flex;
+    }
+
+    .star {
+        cursor: pointer;
+        color: lightgray;
+    }
+
+    input[type="radio"]:checked ~ label {
+        color: orange;
+    }
+
+    input[type="radio"]:checked + label,
+    input[type="radio"]:checked + label ~ label {
+        color: gold;
+    }
+
+    .star:hover,
+    .star:hover ~ .star {
+        color: orange;
+    }
+</style>
