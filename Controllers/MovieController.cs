@@ -54,10 +54,6 @@ namespace RottenPotatoes.Controllers
             Console.WriteLine(id);
             return RedirectToAction("Create", "Watchlist", new { id = id });
         }
-        public IActionResult RemoveFromWatchlist(int? id)
-        {
-            return RedirectToAction("Delete", "Watchlist", new { id = id });
-        }
         // GET: Movie/Create
         public IActionResult Create()
         {

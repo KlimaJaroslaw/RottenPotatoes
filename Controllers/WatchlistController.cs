@@ -148,13 +148,13 @@ namespace RottenPotatoes.Controllers
             }
 
             var watchlist = await _context.Watchlist
-                .FirstOrDefaultAsync(m => m.Movie_ID == id);
+                .FirstOrDefaultAsync(m => m.Watchlist_ID == id);
             if (watchlist == null)
             {
                 return NotFound();
             }
 
-            return RedirectToAction("Index","Movie");
+            return View(watchlist);
         }
 
         // POST: Watchlist/Delete/5
@@ -173,7 +173,7 @@ namespace RottenPotatoes.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Movie");
+            return RedirectToAction(nameof(Index));
         }
 
         private bool WatchlistExists(int id)
