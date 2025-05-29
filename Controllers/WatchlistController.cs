@@ -82,7 +82,10 @@ namespace RottenPotatoes.Controllers
                 Console.WriteLine("---------- ID FILMU DODANEGO DO WATCHLISTY!!! -------");
                 Console.WriteLine(id);
                 watchlist.Movie_ID = id;
-                _context.Add(watchlist);
+                if (_context.Watchlist.Where(x => x.User_ID == _session.Get<User>("user").User_ID).Where(x => x.Movie_ID == id).Count() == 0)
+                {
+                    _context.Add(watchlist);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Movie");
             }
