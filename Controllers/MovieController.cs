@@ -24,9 +24,9 @@ namespace RottenPotatoes.Controllers
         // GET: Movie
         public async Task<IActionResult> Index()
         {
-              return _context.Movie != null ? 
-                          View(await _context.Movie.ToListAsync()) :
-                          Problem("Entity set 'PotatoContext.Movie'  is null.");
+            return _context.Movie != null ?
+                        View(await _context.Movie.ToListAsync()) :
+                        Problem("Entity set 'PotatoContext.Movie'  is null.");
         }
 
         // GET: Movie/Details/5

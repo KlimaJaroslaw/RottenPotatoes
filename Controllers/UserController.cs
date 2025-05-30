@@ -86,6 +86,10 @@ namespace RottenPotatoes.Controllers
 
         public async void RegisterUser(string username, string plainPassword)
         {
+            User usr = await _context.Users.Where(x => x.Login_Hash == username).FirstOrDefaultAsync();
+            if (usr != default)            
+                return;            
+
             string hashedPassword = _passwordHasher.HashPassword(username, plainPassword);
             RottenPotatoes.Models.User u = new User();
             u.Login_Hash = username;

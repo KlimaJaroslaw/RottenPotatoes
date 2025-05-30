@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Data;
 using RottenPotatoes.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<PotatoContext>(options =>
@@ -43,5 +44,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+var resourceNames = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+Console.WriteLine("Resources: " + string.Join(", ", resourceNames)); // View in output
 
 app.Run();

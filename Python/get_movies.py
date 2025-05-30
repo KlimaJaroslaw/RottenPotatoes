@@ -5,7 +5,7 @@ import ast
 csv_file_path     = 'movies.csv'
 insert_sql_file   = 'insert_movies.sql'
 delete_sql_file   = 'delete_movies.sql'
-table_name        = 'Movies'
+table_name        = 'Movie'
 
 # DB columns in desired order
 db_columns = [
@@ -20,7 +20,7 @@ db_columns = [
 def escape_sql(value):
     """Escape for SQL, wrap in single-quotes or produce NULL."""
     if not value:
-        return 'NULL'
+        return '\'\''
     v = str(value).replace("'", "''")
     return f"'{v}'"
 
