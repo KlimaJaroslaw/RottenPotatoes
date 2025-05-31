@@ -3,10 +3,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Data;
 using RottenPotatoes.Services;
 using System.Reflection;
+using RottenPotatoes.Authentication;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<PotatoContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("PotatoContext") ?? throw new InvalidOperationException("Connection string 'PotatoContext' not found.")));
+
+builder.Services.AddAuthentication(CustomTokenAuthOptions.DefaultScheme)
+    .AddScheme<CustomTokenAuthOptions, CustomTokenAuthHandler>(CustomTokenAuthOptions.DefaultScheme, options => { });
+
+builder.Services.AddAuthorization();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -39,6 +46,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

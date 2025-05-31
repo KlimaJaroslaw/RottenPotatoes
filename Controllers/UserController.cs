@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using RottenPotatoes.Models;
 using RottenPotatoes.Services;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Cryptography;
 
 namespace RottenPotatoes.Controllers
 {
@@ -98,6 +99,9 @@ namespace RottenPotatoes.Controllers
             var permission = await _context.Permissions.Where(x => x.Description == "Reviewer").FirstOrDefaultAsync();
             u.Permission = permission;
             u.Permission_ID = permission?.Permission_ID ?? 0;
+            u.ApiToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+            Console.WriteLine("-----------------------------------------------");
+            Console.WriteLine(u.ApiToken);
             await _context.Users.AddAsync(u);
             await _context.SaveChangesAsync();
             // Store username and hashedPassword in your database

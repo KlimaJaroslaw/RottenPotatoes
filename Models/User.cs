@@ -11,6 +11,7 @@ namespace RottenPotatoes.Models
         public string Login_Hash { get; set; } //Unique (PotatoContex.cs)
         public string Password_Hash { get; set; }
         public string? Email_Hash { get; set; }
+        public string ApiToken { get; set; }
 
         [ForeignKey(nameof(Permission))]
         public int Permission_ID { get; set; }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using RottenPotatoes.Models;
 using RottenPotatoes.Services;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +12,7 @@ using RottenPotatoes.DTO;
 namespace RottenPotatoes.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ApiController : ControllerBase
     {
