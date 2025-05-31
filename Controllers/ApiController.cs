@@ -152,6 +152,26 @@ namespace RottenPotatoes.Controllers
             if (dtos == null) return NotFound();
             return Ok(dtos);
         }
+        [HttpPut("Watchlists")]
+        public async Task<ActionResult<WatchlistDTO>> PutWatchlists(WatchlistDTO watchlist)
+        {
+            if (_context.Watchlist == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                Watchlist w = WatchlistDTO.GetWatchlistObject(watchlist);
+                _context.Watchlist.Add(w);
+                _context.SaveChangesAsync();
+                return Ok(watchlist);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         
         #endregion
     }
