@@ -42,7 +42,6 @@ namespace RottenPotatoes.Authentication
                 return AuthenticateResult.Fail("Username or Token not provided in headers.");
             }
 
-            // Znajdź użytkownika w bazie danych
             var user = await _context.Users
                                  .FirstOrDefaultAsync(u => u.Login_Hash == username && u.ApiToken == token);
 
@@ -52,14 +51,11 @@ namespace RottenPotatoes.Authentication
                 return AuthenticateResult.Fail("Invalid username or token.");
             }
 
-            // Użytkownik znaleziony i token pasuje, utwórz tożsamość
             var claims = new[] {
                 new Claim(ClaimTypes.NameIdentifier, user.User_ID.ToString()),
                 new Claim(ClaimTypes.Name, user.Login_Hash),
-                // Możesz dodać inne claims, np. role
-                // new Claim(ClaimTypes.Role, "UserRole"),
             };
-            var identity = new ClaimsIdentity(claims, Scheme.Name); // Scheme.Name to "CustomToken"
+            var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
