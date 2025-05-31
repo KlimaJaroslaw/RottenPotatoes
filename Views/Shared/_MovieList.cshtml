@@ -36,16 +36,17 @@
                                 </form>
                         </td>
                         <td>
+                                <form asp-action="AddToWatchlist" asp-route-id="@movie.Movie_ID" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger">Add To Watchlist</button>
+                                </form>
+                        </td>
+                        <td>
                             @* Only show edit/delete if the current user owns the review *@
                                 <form asp-action="Delete" asp-route-id="@movie.Movie_ID" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this movie?');">
                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                         </td>
-                        <td>
-                                <form asp-action="AddToWatchlist" asp-route-id="@movie.Movie_ID" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-sm btn-danger">Add To Watchlist</button>
-                                </form>
-                        </td>
+                        
                     </tr>
                 }
             </tbody>

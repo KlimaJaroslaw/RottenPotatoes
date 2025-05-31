@@ -29,7 +29,7 @@ namespace RottenPotatoes.Controllers
         {
             if (_context.Movie == null)
                 return NotFound();
-            
+
             var dtos = await _context.Movie
                                      .Select(x => new MovieDTO(x))
                                      .ToListAsync();
@@ -45,7 +45,7 @@ namespace RottenPotatoes.Controllers
                 return NotFound();
             }
 
-            var dtos = await _context.Movie.FindAsync(id);            
+            var dtos = await _context.Movie.FindAsync(id);
             if (dtos == null)
             {
                 return NotFound();
@@ -103,14 +103,14 @@ namespace RottenPotatoes.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);                
-            }                                    
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPatch("Reviews")]
         public async Task<ActionResult<ReviewDTO>> PatchReviews(ReviewDTO review)
         {
-            if (_context.Reviews == null || review?.Review_ID==null || review?.Review_ID==0)
+            if (_context.Reviews == null || review?.Review_ID == null || review?.Review_ID == 0)
             {
                 return NotFound();
             }
@@ -127,6 +127,30 @@ namespace RottenPotatoes.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        #endregion        
+        #endregion
+
+        #region Watchlist
+        [HttpGet("Watchlists")]
+        public async Task<ActionResult<WatchlistDTO>> GetWatchlists()
+        {
+            if (_context.Watchlist == null) return NotFound();
+
+            var dtos = await _context.Watchlist
+                                     .Select(x => new WatchlistDTO(x))
+                                     .ToListAsync();
+
+            return Ok(dtos);
+        }
+        [HttpGet("Watchlists/{id}")]
+        public async Task<ActionResult<WatchlistDTO>> GetWatchlists(int id)
+        {
+            if (_context.Watchlist == null) return NotFound();
+
+            var dtos = await _context.Watchlist.FindAsync(id);
+            if (dtos == null) return NotFound();
+            return Ok(dtos);
+        }
+        
+        #endregion
     }
 }
