@@ -54,12 +54,20 @@ namespace RottenPotatoes.Controllers
         public IActionResult GetNextMovieFromWatchlist()
         {
             // Jeśli potrzebujesz warunku
-            int firstMovieID = _context.Watchlist
+            if (_context.Watchlist.Count() > 0)
+            {
+                int firstMovieID = _context.Watchlist
                                     .Where(x => x.User_ID == _session.Get<User>("user").User_ID)
                                     .OrderBy(x => x.Priority)
                                     .Select(x => x.Movie_ID).Last();
-            Console.WriteLine(firstMovieID);
-            return RedirectToAction("Details", "Movie", new { id=firstMovieID });
+                Console.WriteLine(firstMovieID);
+                return RedirectToAction("Details", "Movie", new { id = firstMovieID });
+            }
+            else
+            {
+                return RedirectToAction("Index", "Watchlist");
+            }
+            
         }
 
         // GET: Watchlist/Create
