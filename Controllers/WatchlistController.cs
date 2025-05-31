@@ -25,6 +25,7 @@ namespace RottenPotatoes.Controllers
         // GET: Watchlist
         public async Task<IActionResult> Index()
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             var moviesOnWatchlist = _context.Watchlist.Where(watchlist => watchlist.User_ID == _session.Get<User>("user").User_ID).Select(x => x.Movie);
 
 
@@ -34,6 +35,7 @@ namespace RottenPotatoes.Controllers
         // GET: Watchlist/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (id == null || _context.Watchlist == null)
             {
                 return NotFound();
@@ -53,6 +55,7 @@ namespace RottenPotatoes.Controllers
 
         public IActionResult GetNextMovieFromWatchlist()
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             // Jeśli potrzebujesz warunku
             if (_context.Watchlist.Count() > 0)
             {
@@ -73,6 +76,7 @@ namespace RottenPotatoes.Controllers
         // GET: Watchlist/Create
         public IActionResult Create()
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             return View();
         }
 
@@ -83,6 +87,7 @@ namespace RottenPotatoes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Watchlist_ID,User_ID,Movie_ID,Added_Date,Priority")] Watchlist watchlist, int id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (ModelState.IsValid)
             {
                 watchlist.User_ID = _session.Get<User>("user").User_ID;
@@ -103,6 +108,7 @@ namespace RottenPotatoes.Controllers
         // GET: Watchlist/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (id == null || _context.Watchlist == null)
             {
                 return NotFound();
@@ -123,6 +129,7 @@ namespace RottenPotatoes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Watchlist_ID,User_ID,Movie_ID,Added_Date,Priority")] Watchlist watchlist)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (id != watchlist.Watchlist_ID)
             {
                 return NotFound();
@@ -154,6 +161,7 @@ namespace RottenPotatoes.Controllers
         // GET: Watchlist/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (id == null || _context.Watchlist == null)
             {
                 return NotFound();
@@ -174,6 +182,7 @@ namespace RottenPotatoes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (_context.Watchlist == null)
             {
                 return Problem("Entity set 'PotatoContext.Watchlist'  is null.");

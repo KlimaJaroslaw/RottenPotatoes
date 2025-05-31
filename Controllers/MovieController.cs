@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Data;
 using RottenPotatoes.Services;
+using RottenPotatoes.Models;
 
 namespace RottenPotatoes.Controllers
 {
@@ -24,6 +25,7 @@ namespace RottenPotatoes.Controllers
         // GET: Movie
         public async Task<IActionResult> Index()
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             return _context.Movie != null ?
                         View(await _context.Movie.ToListAsync()) :
                         Problem("Entity set 'PotatoContext.Movie'  is null.");
@@ -32,6 +34,7 @@ namespace RottenPotatoes.Controllers
         // GET: Movie/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (id == null || _context.Movie == null)
             {
                 return NotFound();
@@ -50,6 +53,7 @@ namespace RottenPotatoes.Controllers
 
         public IActionResult AddToWatchlist(int? id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             Console.WriteLine("####### ID to:");
             Console.WriteLine(id);
             return RedirectToAction("Create", "Watchlist", new { id = id });
@@ -57,6 +61,7 @@ namespace RottenPotatoes.Controllers
         // GET: Movie/Create
         public IActionResult Create()
         {
+            if (_session.Get<User>("User") == null) return RedirectToAction("Login", "User");
             return View();
         }
 
@@ -67,6 +72,7 @@ namespace RottenPotatoes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Movie_ID,Title,Production_Date,Director,Producer,ScreenWriter,Synopsis")] RottenPotatoes.Models.Movie movie)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
@@ -79,6 +85,7 @@ namespace RottenPotatoes.Controllers
         // GET: Movie/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (_session.Get<User>("User") == null) return RedirectToAction("Login", "User");
             if (id == null || _context.Movie == null)
             {
                 return NotFound();
@@ -99,6 +106,7 @@ namespace RottenPotatoes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Movie_ID,Title,Production_Date,Director,Producer,ScreenWriter,Synopsis")] RottenPotatoes.Models.Movie movie)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (id != movie.Movie_ID)
             {
                 return NotFound();
@@ -130,6 +138,7 @@ namespace RottenPotatoes.Controllers
         // GET: Movie/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (id == null || _context.Movie == null)
             {
                 return NotFound();
@@ -150,6 +159,7 @@ namespace RottenPotatoes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             if (_context.Movie == null)
             {
                 return Problem("Entity set 'PotatoContext.Movie'  is null.");

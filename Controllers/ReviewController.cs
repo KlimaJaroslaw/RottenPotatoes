@@ -23,6 +23,7 @@ namespace RottenPotatoes.Controllers
         // GET: Review/All
         public async Task<IActionResult> All()
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             User user = _session.Get<User>("user");
             if (user == null)                            
                 return RedirectToAction("Login", "User");
@@ -42,6 +43,7 @@ namespace RottenPotatoes.Controllers
         [HttpGet("Review/User")]
         public async Task<IActionResult> User()
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             User user = _session.Get<User>("user");
             if (user == null)
                 return RedirectToAction("Login", "User");
@@ -57,6 +59,7 @@ namespace RottenPotatoes.Controllers
         [HttpGet("Review/User/{id}")]
         public async Task<IActionResult> User(int id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             User user = _session.Get<User>("user");
             if (user == null)
                 return RedirectToAction("Login", "User");
@@ -76,6 +79,7 @@ namespace RottenPotatoes.Controllers
         
         public async Task<IActionResult> Movie(int id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             User user = _session.Get<User>("user");
             if (user == null)
                 return RedirectToAction("Login", "User");
@@ -93,6 +97,7 @@ namespace RottenPotatoes.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             User user = _session.Get<User>("user");
             if (user == null)
                 return RedirectToAction("Login", "User");
@@ -111,6 +116,7 @@ namespace RottenPotatoes.Controllers
 
         public async Task<IActionResult> Create()
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             User user = _session.Get<User>("user");
             if (user == null)
                 return RedirectToAction("Login", "User");
@@ -124,6 +130,7 @@ namespace RottenPotatoes.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Review review)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             User user = _session.Get<User>("user");
             if (user == null)
                 return RedirectToAction("Login", "User");
@@ -144,6 +151,7 @@ namespace RottenPotatoes.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             User user = _session.Get<User>("user");
             if (user == null)
                 return RedirectToAction("Login", "User");
@@ -161,6 +169,7 @@ namespace RottenPotatoes.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Review review)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             User user = _session.Get<User>("user");
             if (user == null)
                 return RedirectToAction("Login", "User");
@@ -181,6 +190,7 @@ namespace RottenPotatoes.Controllers
         [HttpPost]        
         public async Task<IActionResult> Delete(int id)
         {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             var user = _session.Get<User>("user");
             if (user == null)
                 return RedirectToAction("Login", "User");
