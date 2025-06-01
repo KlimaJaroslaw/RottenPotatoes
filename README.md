@@ -15,23 +15,28 @@ RottenPotatoes to aplikacja, która pomoże ci wybrać twój następny film!
 ### Logowanie i Rejestracja
 - Jest to początkowy widok, który jest obecny po pierwszym wejściu na stronę
 - Żeby przejść do reszty treści trezba podać login i hasło lub utworzyć nowe konto, także podając login i hasło
+![Logowanie](Login.png)
 
 ### Movies
 - Jest to lista wszystkich filmów dostępnych w naszym serwisie
 - Można wejść w ich detale lub dodać je do watchlisty
+![Movies](Movies.png)
 
 ### Watchlist
 - Jest to lista wybranych filmów z których każdy ma swój priorytet i ten o największym priorytecie będzie wyświetlany jako pierwszy
 - Można oczywiście wchodzić w ich detale i usuwać je z watchlisty
+![Watchlist](Watchlist.png)
 
 ### Reviews
 - Jest to lista wszystkich recenzji na temat filmów
 - Można wystawić własną recenzję za pomocą post Review
 - Można też edytować i usuwać napisane przez siebie recenzje
+![Reviews](Review.png)
 
 ### TOP5 
 - Wyświetla 5 najlepiej ocenianych filmów w serwisie
 - Jeśli nie ma wystarczająco recenzji, to wyświetli ich mniej
+![TOP5](TOP5.png)
 
 ### Account
 - Wyświetla dane o koncie użytkownika, w tym klucz API
