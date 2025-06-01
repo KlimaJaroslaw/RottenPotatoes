@@ -76,7 +76,7 @@ namespace RottenPotatoes.Controllers
         private async Task<User?> ValidateUser(User user)
         {
             //jesli user istnieje w bazie danych -> zwracamy user, jesli nie -> null
-            var userDb = await _context.Users.Include(u => u.Permission).FirstOrDefaultAsync(u =>u.Login_Hash == user.Login_Hash);
+            var userDb = await _context.Users.Include(u => u.Permission).FirstOrDefaultAsync(u => u.Login_Hash == user.Login_Hash);
             if (userDb == null)
                 return null;
             if (VerifyPassword(userDb?.Login_Hash, user.Password_Hash, userDb.Password_Hash))
@@ -88,8 +88,8 @@ namespace RottenPotatoes.Controllers
         public async void RegisterUser(string username, string plainPassword)
         {
             User usr = await _context.Users.Where(x => x.Login_Hash == username).FirstOrDefaultAsync();
-            if (usr != default)            
-                return;            
+            if (usr != default)
+                return;
 
             string hashedPassword = _passwordHasher.HashPassword(username, plainPassword);
             RottenPotatoes.Models.User u = new User();
@@ -118,8 +118,14 @@ namespace RottenPotatoes.Controllers
             {
                 return false;
             }
-            
+
         }
         #endregion
+
+        public IActionResult GetDetails()
+        {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
+            return View(_session.Get<User>("user"));
+        }
     }
 }
