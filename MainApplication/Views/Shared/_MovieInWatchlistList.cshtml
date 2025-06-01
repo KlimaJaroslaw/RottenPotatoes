@@ -1,6 +1,6 @@
-@model IEnumerable<RottenPotatoes.Models.Movie>;
+@model IEnumerable<RottenPotatoes.Models.Watchlist>;
 @{
-    List<Movie> movies = (List<Movie>)Model;
+    List<Watchlist> watchlists = (List<Watchlist>)Model;
 }
 
 
@@ -13,14 +13,15 @@
                     <th>Title</th>
                     <th>Production Date</th>
                     <th>Director</th>
-                    <th></th>
+                    <th>Priority</th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var movie in movies)
+                @foreach (var watchlist in watchlists)
                 {
+                    Movie movie = watchlist.Movie;
                     <tr>
                         <td>
                             <form asp-action="Details" asp-route-id="@movie.Movie_ID" method="get" class="d-inline">
@@ -30,7 +31,7 @@
                         <td>@movie.Title</td>
                         <td>@movie.Production_Date</td>                            
                         <td>@movie.Director</td>
-                        
+                        <td>@watchlist.Priority</td>
                         <td>
                             @* Only show edit/delete if the current user owns the review *@
                                 <form asp-action="Delete" asp-controller="Watchlist" asp-route-id="@movie.Movie_ID" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this movie from watchlist?');">

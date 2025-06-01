@@ -26,10 +26,10 @@ namespace RottenPotatoes.Controllers
         public async Task<IActionResult> Index()
         {
             if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
-            var moviesOnWatchlist = _context.Watchlist.Where(watchlist => watchlist.User_ID == _session.Get<User>("user").User_ID).Select(x => x.Movie);
+            // var moviesOnWatchlist = _context.Watchlist.Where(watchlist => watchlist.User_ID == _session.Get<User>("user").User_ID).Select(x => x.Movie);
+            var watchlists = _context.Watchlist.Include(x => x.Movie).Where(watchlist => watchlist.User_ID == _session.Get<User>("user").User_ID);
 
-
-            return View(moviesOnWatchlist.ToList());
+            return View(watchlists.ToList());
         }
 
         // GET: Watchlist/Details/5
