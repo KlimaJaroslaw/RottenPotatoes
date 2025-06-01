@@ -57,7 +57,7 @@ namespace RottenPotatoes.Controllers
         {
             if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
             // Jeśli potrzebujesz warunku
-            if (_context.Watchlist.Count() > 0)
+            if (_context.Watchlist.Where(x => x.User_ID == _session.Get<User>("user").User_ID).Count() > 0)
             {
                 int firstMovieID = _context.Watchlist
                                     .Where(x => x.User_ID == _session.Get<User>("user").User_ID)
