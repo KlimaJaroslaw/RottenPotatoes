@@ -19,12 +19,12 @@ RottenPotatoes to aplikacja, która pomoże ci wybrać twój następny film!
 
 ### Movies
 - Jest to lista wszystkich filmów dostępnych w naszym serwisie
-- Można wejść w ich detale lub dodać je do watchlisty
+- Można wejść w ich szczegóły lub dodać je do watchlisty
 ![Movies](Movies.png)
 
 ### Watchlist
 - Jest to lista wybranych filmów z których każdy ma swój priorytet i ten o największym priorytecie będzie wyświetlany jako pierwszy
-- Można oczywiście wchodzić w ich detale i usuwać je z watchlisty
+- Można oczywiście wchodzić w ich szczegóły i usuwać je z watchlisty
 ![Watchlist](Watchlist.png)
 
 ### Reviews
