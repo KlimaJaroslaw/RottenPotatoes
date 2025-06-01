@@ -8,6 +8,8 @@ using RottenPotatoes.Services;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using RottenPotatoes.DTO;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 
 namespace RottenPotatoes.Controllers
 {
@@ -23,6 +25,22 @@ namespace RottenPotatoes.Controllers
         {
             _context = context;
             _session = session;
+        }
+
+        private int GetCurrentUserId()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return userId;
+            }
+            throw new InvalidOperationException("User ID not found or invalid in token claims for an authenticated user.");
+        }
+
+        private string GetCurrentUsername()
+        {
+            var usernameClaim = User.FindFirst(ClaimTypes.Name);
+            return usernameClaim?.Value ?? throw new InvalidOperationException("Username not found in token claims for an authenticated user.");
         }
 
         #region Movies
@@ -166,6 +184,78 @@ namespace RottenPotatoes.Controllers
                 _context.Watchlist.Add(w);
                 _context.SaveChangesAsync();
                 return Ok(watchlist);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("MovieWatch")]
+        public async Task<ActionResult<WatchlistDTO>> PostMovieToWatchlist(MovieTitleAndPriorityDTO movieData)
+        {
+            string title = movieData.Title;
+            int priority = movieData.Priority; 
+            Console.WriteLine(title);
+            if (_context.Watchlist == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                
+                Movie? m = await _context.Movie.FirstOrDefaultAsync(x => x.Title == title);
+
+                if (m != null)
+                {
+                    Watchlist w = new Watchlist
+                    {
+                        User_ID = GetCurrentUserId(),
+                        Movie_ID = m.Movie_ID,
+                        Added_Date = DateTime.Now,
+                        Priority = priority
+                    };
+                    
+                    _context.Watchlist.Add(w);
+                    await _context.SaveChangesAsync();
+                    
+                    return Ok(title);
+                }
+                return NotFound($"Movie '{title}' not found in database");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("Watchlists")]
+        public async Task<ActionResult<WatchlistDTO>> DeleteMovieFromWatchlist(MovieTitleDTO movieData)
+        {
+            string title = movieData.Title;
+            Console.WriteLine(title);
+            if (_context.Watchlist == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                
+                Movie? m = await _context.Movie.FirstOrDefaultAsync(x => x.Title == title);
+
+                if (m != null)
+                {
+                    Watchlist? w = await _context.Watchlist.FirstOrDefaultAsync(x => x.Movie_ID == m.Movie_ID);
+                    if (w != null)
+                    {
+                        _context.Watchlist.Remove(w);
+                        await _context.SaveChangesAsync();
+                        return Ok(title);
+                    }
+                    return NotFound($"Movie '{title}' not on your watchlist");
+                }
+                return NotFound($"Movie '{title}' not found in database");
             }
             catch (Exception ex)
             {
