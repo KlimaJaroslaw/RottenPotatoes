@@ -41,7 +41,7 @@ namespace RottenPotatoes.Migrations
             migrationBuilder.Sql("INSERT INTO Permissions (Description) VALUES ('System Admin');");
             migrationBuilder.Sql("INSERT INTO Permissions (Description) VALUES ('Reviewer');");
             migrationBuilder.Sql("INSERT INTO Permissions (Description) VALUES ('Casual');");
-            migrationBuilder.Sql("INSERT INTO Users (Login_Hash, Password_Hash, Permission_ID) VALUES ('admin0', 'admin0', (SELECT Permission_ID FROM Permissions WHERE Description = 'System Admin'),'00000')");
+            migrationBuilder.Sql("INSERT INTO Users (Login_Hash, Password_Hash, Permission_ID) VALUES ('admin0', 'admin0', (SELECT Permission_ID FROM Permissions WHERE Description = 'System Admin'))");
         }
 
         /// <inheritdoc />
