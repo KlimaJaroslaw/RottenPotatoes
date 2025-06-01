@@ -33,6 +33,14 @@ RottenPotatoes to aplikacja, która pomoże ci wybrać twój następny film!
 - Można też edytować i usuwać napisane przez siebie recenzje
 ![Reviews](Reviews.png)
 
+### Review Details
+- Klikając przycisk **Details** opnii, możemy zobaczyć jej szczegóły
+![Review Details](ReviewDetails.png)
+
+### User's Reviews
+- Istnieje również możliwość zobaczenia zestawienie opnii danego użytkownika
+![Users Reviews](ReviewsUser.png)
+
 ### TOP5 
 - Wyświetla 5 najlepiej ocenianych filmów w serwisie
 - Jeśli nie ma wystarczająco recenzji, to wyświetli ich mniej
