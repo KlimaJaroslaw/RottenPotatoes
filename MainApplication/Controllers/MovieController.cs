@@ -36,6 +36,12 @@ namespace RottenPotatoes.Controllers
             return View(await _context.Reviews.Include(x => x.Movie).GroupBy(x => x.Movie).Select(x => new { Movie = x.Key, AvgRating = x.Average(y => y.Rating) }).OrderByDescending(x => x.AvgRating).Take(5).Select(x => x.Movie).ToListAsync());
         }
 
+        public async Task<IActionResult> Fresh()
+        {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
+            return View(await _context.Watchlist.Include(x => x.Movie).GroupBy(x => x.Movie).Select(x => new { Movie = x.Key, number = x.Count() }).OrderByDescending(x => x.number).Take(10).Select(x => x.Movie).ToListAsync());
+        }
+
         // GET: Movie/Details/5
         public async Task<IActionResult> Details(int? id)
         {

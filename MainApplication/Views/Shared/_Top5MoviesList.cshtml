@@ -35,6 +35,11 @@
                         <td>@movies[i].Title</td>
                         <td>@movies[i].Production_Date</td>                            
                         <td>@movies[i].Director</td>
+                        <td>
+                                <form asp-action="AddToWatchlist" asp-route-id="@movies[i].Movie_ID" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-primary me-1">Add To Watchlist</button>
+                                </form>
+                        </td>
                     </tr>
                 }
             </tbody>
