@@ -31,7 +31,7 @@ RottenPotatoes to aplikacja, która pomoże ci wybrać twój następny film!
 - Jest to lista wszystkich recenzji na temat filmów
 - Można wystawić własną recenzję za pomocą post Review
 - Można też edytować i usuwać napisane przez siebie recenzje
-![Reviews](Review.png)
+![Reviews](Reviews.png)
 
 ### TOP5 
 - Wyświetla 5 najlepiej ocenianych filmów w serwisie
