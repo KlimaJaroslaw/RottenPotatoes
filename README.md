@@ -46,5 +46,10 @@ RottenPotatoes to aplikacja, która pomoże ci wybrać twój następny film!
 - Jeśli nie ma wystarczająco recenzji, to wyświetli ich mniej
 ![TOP5](TOP5.png)
 
+### Fresh
+- Wyświetla najczęsciej występujące na watchlistach filmy
+- Liczba filmów jest ograniczona do 10
+![Fresh](Fresh.png)
+
 ### Account
 - Wyświetla dane o koncie użytkownika, w tym klucz API
