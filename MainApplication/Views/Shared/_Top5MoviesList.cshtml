@@ -1,0 +1,43 @@
+@model IEnumerable<RottenPotatoes.Models.Movie>;
+@{
+    List<Movie> movies = (List<Movie>)Model;
+}
+
+
+<div class="container mt-5">
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="table-primary">
+                <tr>
+                    <th></th>
+                    <th>Place</th>
+                    <th>Title</th>
+                    <th>Production Date</th>
+                    <th>Director</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i=0;i<movies.Count();i++)
+                {
+                
+                    <tr>
+                        <td>
+                            <form asp-action="Details" asp-route-id="@movies[i].Movie_ID" method="get" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-primary me-1">Details</button>
+                            </form>
+                        </td>
+                        <td>
+                            TOP @(i+1)
+                        </td>
+                        <td>@movies[i].Title</td>
+                        <td>@movies[i].Production_Date</td>                            
+                        <td>@movies[i].Director</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

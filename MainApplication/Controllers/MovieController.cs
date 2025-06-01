@@ -30,6 +30,11 @@ namespace RottenPotatoes.Controllers
                         View(await _context.Movie.ToListAsync()) :
                         Problem("Entity set 'PotatoContext.Movie'  is null.");
         }
+        public async Task<IActionResult> Top5()
+        {
+            if (_session.Get<User>("user") == null) return RedirectToAction("Login", "User");
+            return View(await _context.Reviews.Include(x => x.Movie).GroupBy(x => x.Movie).Select(x => new { Movie = x.Key, AvgRating = x.Average(y => y.Rating) }).OrderByDescending(x => x.AvgRating).Take(5).Select(x => x.Movie).ToListAsync());
+        }
 
         // GET: Movie/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -46,7 +51,7 @@ namespace RottenPotatoes.Controllers
             {
                 return NotFound();
             }
-            
+
 
             return View(movie);
         }

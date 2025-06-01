@@ -1,0 +1,12 @@
+@model IEnumerable<RottenPotatoes.Models.Movie>
+
+@{
+    ViewData["Title"] = "Top5";
+}
+
+<div class="container mt-5">
+    <div class="card shadow p-4 rounded-3 mx-auto">
+        <h2 class="mb-4 text-center">TOP5 movies!!!</h2>
+        @Html.Partial("_Top5MoviesList", Model)
+    </div>
+</div>
