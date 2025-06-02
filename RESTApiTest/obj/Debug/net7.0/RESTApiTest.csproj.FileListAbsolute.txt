@@ -12,3 +12,17 @@ D:\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\refint\RESTApiTest.dll
 D:\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\RESTApiTest.pdb
 D:\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\RESTApiTest.genruntimeconfig.cache
 D:\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\ref\RESTApiTest.dll
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\bin\Debug\net7.0\RESTApiTest.exe
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\bin\Debug\net7.0\RESTApiTest.deps.json
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\bin\Debug\net7.0\RESTApiTest.runtimeconfig.json
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\bin\Debug\net7.0\RESTApiTest.dll
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\bin\Debug\net7.0\RESTApiTest.pdb
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\RESTApiTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\RESTApiTest.AssemblyInfoInputs.cache
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\RESTApiTest.AssemblyInfo.cs
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\RESTApiTest.csproj.CoreCompileInputs.cache
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\RESTApiTest.dll
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\refint\RESTApiTest.dll
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\RESTApiTest.pdb
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\RESTApiTest.genruntimeconfig.cache
+C:\Studia\2ROK\2SEM\PZ2\RottenPotatoes\RESTApiTest\obj\Debug\net7.0\ref\RESTApiTest.dll
